@@ -7,23 +7,25 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-	<header class="navbar navbar-fixed-top navbar-inverse">
-		<div class="navbar-inner">
-			<div class="container">
-				<nav>
-					<div class="nav-collapse collapse">
-						<ul class="nav">
-							<li><%= link_to "Home", "#" %></li>
-							<li><%= link_to "About", "#" %></li>
-							<li><%= link_to "Sign in", "#" %></li>
-						</ul>
-					</div>
-				</nav>
-			</div>
-		</div>
-	</header>
-	<div class="container">
-		<%= yield %>
-	</div>
+  <header class="navbar navbar-fixed-top navbar-inverse">
+    <div class="navbar-inner">
+      <div class="container">
+        <nav>
+          <li><%= link_to "Games, books and anime", "/static_pages/home", id: "logo" %></li>
+          <div class="nav-collapse collapse">
+            <ul class="nav pull-right">
+              <li><%= link_to "Home", "#" %></li>
+              <li><%= link_to "About", "#" %></li>
+              <li><%= link_to "Sign in", "#" %></li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+    </div>
+  </header>
+  <div class="container">
+    <%= yield %>
+    <%= debug(params) if Rails.env.development? %>
+  </div>
 </body>
 </html>
