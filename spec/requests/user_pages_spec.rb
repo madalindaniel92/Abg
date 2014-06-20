@@ -23,6 +23,7 @@ describe "User pages" do
     before { visit signup_path }
 
     let(:submit) { "Create my account" }
+    let(:email) { "example.user@gmail.com" }
 
     context "with invalid information" do
       it "should not create a user" do
@@ -33,13 +34,21 @@ describe "User pages" do
     context "with valid information" do
       before do
         fill_in "Name", with: "Example User"
-        fill_in "Email", with: "example.user@gmail.com"
+        fill_in "Email", with: email
         fill_in "Password", with: "isneeded"
         fill_in "Password confirmation", with: "isneeded"
       end
 
       it "should create a user" do
         expect { click_button submit }.to change(User, :count)
+      end
+
+      context "after saving the user" do
+        before { click_button submit }
+        let(:user) { User.find_by_email(email) }
+
+        it { should have_title(user.name) }
+        it { should have_selector('div.alert.alert-success', text: 'Welcome') }
       end
     end
   end
