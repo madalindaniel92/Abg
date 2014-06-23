@@ -57,7 +57,10 @@ describe "User pages" do
   describe "edit" do
     let(:user) { FactoryGirl.create(:user) }
     let(:submit) { "Save changes" }
-    before { visit edit_user_path(user) }
+    before do
+      sign_in user
+      visit edit_user_path(user)
+    end
 
     describe "page" do
       it { should have_content("Update your profile") }
@@ -84,9 +87,31 @@ describe "User pages" do
 
       it { should have_title(new_name) }
       it { should have_selector('div.alert.alert-success') }
-      it { should have_link("Sign out"), href: signin_path }
+      it { should have_link("Sign out", href: signin_path ) }
       specify { expect(user.reload.name).to eq(new_name) }
       specify { expect(user.reload.email).to eq(new_email) }
+    end
+  end
+
+  describe "index" do
+    let(:user) { FactoryGirl.create(:user) }
+    before (:each) do
+      sign_in user
+      visit users_path
+    end
+
+    it { should have_title('All users') }
+    it { should have_content('All users') }
+
+    describe "pagination" do
+      before(:all) { 30.times { FactoryGirl.create(:user) } }
+      after(:all) { User.delete_all }
+
+      it "should list each user" do
+        User.paginate(page: 1).each do |user|
+          expect(page).to have_selector('li', text: user.name)
+        end
+      end
     end
   end
 end

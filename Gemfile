@@ -29,10 +29,9 @@ gem 'spring',        group: :development
 gem 'mechanize'
 
 gem 'will_paginate', '~> 3.0'
+gem 'bootstrap-will_paginate'
 
 gem 'rest-client'
-
-gem 'amqp'
 
 gem 'bootstrap-sass', '2.3.2.0'
 
@@ -42,6 +41,7 @@ group :development, :test do
   gem 'annotate'
   gem 'rspec-rails'
   gem 'factory_girl_rails'
+  gem 'faker'
   gem 'pry'
   gem 'pry-nav'
   gem 'binding_of_caller'
