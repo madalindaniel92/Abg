@@ -48,7 +48,7 @@ describe "Authentication" do
   end
 
   describe "authorization" do
-    context "non-signed-in users" do
+    context "for non-signed-in users" do
       let(:user) { FactoryGirl.create(:user) }
 
       context "in the Users controller" do
@@ -66,6 +66,18 @@ describe "Authentication" do
           before { visit users_path }
           it { should have_title('Sign in') }
         end        
+      end
+
+      context "in the Comments controller" do
+        describe "submiting to the create action" do
+          before { post comments_path }
+          specify { expect(response).to redirect_to(signin_path) }
+        end
+
+        describe "submiting to the destroy action" do
+          before { delete comment_path(FactoryGirl.create(:comment)) }
+          specify { expect(response).to redirect_to(signin_path) }
+        end
       end
     end
 

@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+  has_many :comments, dependent: :destroy
+
   validates_presence_of :name, :email
   validates :name, length: { maximum: 50 }
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
